@@ -3,10 +3,7 @@ package com.groups.schicken.menu.api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,6 +24,47 @@ public class MenuController {
         }
 
         return ResponseEntity.ok(menus);
+    }
+
+    @GetMapping("menus/{menuId}")
+    public ResponseEntity<MenuVO> getMenu(@PathVariable String menuId){
+        try {
+            MenuVO menu = service.getMenu(menuId);
+
+            if(menu == null){
+                return ResponseEntity.notFound().build();
+            }
+
+            return ResponseEntity.ok(menu);
+        } catch (Exception e){
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("menus/category/{categoryId}")
+    public ResponseEntity<CategoryVO> getMenusByCategory(@PathVariable String categoryId){
+        try{
+            CategoryVO category = service.getMenus(categoryId);
+            if(category == null || category.getMenus().isEmpty()){
+                return ResponseEntity.notFound().build();
+            }
+
+            return ResponseEntity.ok(category);
+        } catch (Exception e){
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PutMapping("menus/category/{categoryId}")
+    public ResponseEntity<CategoryVO> setMenuAndCategory(@PathVariable String categoryId, @RequestBody String[] menuIds){
+        try{
+            CategoryVO categoryVO = service.setMenuAndCategory();
+        } catch (Exception e){
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @GetMapping("categories/")

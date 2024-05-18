@@ -15,6 +15,10 @@ public class MenuService {
         return menuDAO.getMenus();
     }
 
+    public CategoryVO getMenus(String categoryId) {
+        return menuDAO.getMenus(categoryId);
+    }
+
     public List<CategoryVO> getCategories() {
         return menuDAO.getCategories();
     }
@@ -25,6 +29,10 @@ public class MenuService {
 
         if(result == 0) throw new RuntimeException("insert 실패");
 
-        return menuDAO.getMenu(categoryVO.getId());
+        return menuDAO.getCategory(categoryVO.getId());
+    }
+
+    public MenuVO getMenu(String menuId) {
+        return menuDAO.getMenu(menuId);
     }
 }
