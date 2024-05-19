@@ -60,7 +60,11 @@ public class MenuController {
     @PutMapping("menus/category/{categoryId}")
     public ResponseEntity<CategoryVO> setMenuAndCategory(@PathVariable String categoryId, @RequestBody String[] menuIds){
         try{
-            CategoryVO categoryVO = service.setMenuAndCategory();
+            CategoryVO categoryVO = service.setMenuAndCategory(categoryId, menuIds);
+
+            if(categoryVO == null) return ResponseEntity.notFound().build();
+
+            return ResponseEntity.ok(categoryVO);
         } catch (Exception e){
             log.error(e.getMessage());
             return ResponseEntity.internalServerError().build();

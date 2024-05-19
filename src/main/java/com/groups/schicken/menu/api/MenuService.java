@@ -16,7 +16,7 @@ public class MenuService {
     }
 
     public CategoryVO getMenus(String categoryId) {
-        return menuDAO.getMenus(categoryId);
+        return menuDAO.getMenusASCategoryVO(categoryId);
     }
 
     public List<CategoryVO> getCategories() {
@@ -34,5 +34,14 @@ public class MenuService {
 
     public MenuVO getMenu(String menuId) {
         return menuDAO.getMenu(menuId);
+    }
+
+    @Transactional
+    public CategoryVO setMenuAndCategory(String categoryId, String[] menuIds) {
+        int result = menuDAO.setMenuAndCategory(categoryId, menuIds);
+
+        if(result == 0) throw new RuntimeException("update 실패");
+
+        return menuDAO.getMenusASCategoryVO(categoryId);
     }
 }

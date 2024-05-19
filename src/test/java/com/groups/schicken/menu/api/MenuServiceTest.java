@@ -3,10 +3,12 @@ package com.groups.schicken.menu.api;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(properties = "spring.profiles.include=dev,prod")
+@Transactional
 class MenuServiceTest {
 
     @Autowired
@@ -22,5 +24,22 @@ class MenuServiceTest {
         assertNotNull(created);
         assertNotNull(created.getId());
         assertEquals(created.getName(), name);
+    }
+
+    @Test
+    void getMenuAndCategory(){
+        String id = "1";
+
+        CategoryVO categoryVO = service.getMenus(id);
+
+        assertNotNull(categoryVO);
+        assertNotNull(categoryVO.getMenus());
+        assertNotEquals(categoryVO.getMenus().size(), 0);
+    }
+
+    @Test
+    void sqlProviderTest(){
+        CategoryVO categoryVO = service.setMenuAndCategory("1", "4,5,6".split(","));
+        System.out.println(categoryVO);
     }
 }
