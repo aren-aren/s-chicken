@@ -15,7 +15,7 @@ public class MenuController {
 
     private final MenuService service;
 
-    @GetMapping("menus/")
+    @GetMapping("menus")
     public ResponseEntity<List<MenuVO>> getMenus(){
         List<MenuVO> menus = service.getMenus();
 
@@ -58,9 +58,10 @@ public class MenuController {
     }
 
     @PutMapping("menus/category/{categoryId}")
-    public ResponseEntity<CategoryVO> setMenuAndCategory(@PathVariable String categoryId, @RequestBody String[] menuIds){
+    public ResponseEntity<CategoryVO> setMenuAndCategory(@PathVariable String categoryId, @RequestBody MenuIntoCategoryVO menuIntoCategoryVO){
         try{
-            CategoryVO categoryVO = service.setMenuAndCategory(categoryId, menuIds);
+            menuIntoCategoryVO.setCategoryId(categoryId);
+            CategoryVO categoryVO = service.setMenuAndCategory(menuIntoCategoryVO);
 
             if(categoryVO == null) return ResponseEntity.notFound().build();
 
@@ -71,7 +72,7 @@ public class MenuController {
         }
     }
 
-    @GetMapping("categories/")
+    @GetMapping("categories")
     public ResponseEntity<List<CategoryVO>> getCategories(){
         List<CategoryVO> categories = service.getCategories();
 
@@ -82,8 +83,8 @@ public class MenuController {
         return ResponseEntity.ok(categories);
     }
 
-    @PostMapping("categories/")
-    public ResponseEntity<CategoryVO> setCategory(CategoryVO categoryVO){
+    @PostMapping("categories")
+    public ResponseEntity<CategoryVO> setCategory(@RequestBody CategoryVO categoryVO){
         try {
             CategoryVO created = service.setCategory(categoryVO);
             if(created == null){

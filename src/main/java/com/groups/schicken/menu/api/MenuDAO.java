@@ -11,10 +11,7 @@ public interface MenuDAO {
         m.id
       , m.menu
       , m.price
-      , c.name AS category
-    FROM menu_and_category mac
-        INNER JOIN menu m ON m.id = mac.menu_id
-        INNER JOIN menu_category c ON c.id = mac.menu_category
+    FROM menu m
     """)
     List<MenuVO> getMenus();
 
@@ -71,5 +68,5 @@ public interface MenuDAO {
     MenuVO getMenu(String menuId);
 
     @InsertProvider(MenuAPISqlProvider.class)
-    int setMenuAndCategory(String categoryId, String[] menuIds);
+    int setMenuAndCategory(MenuIntoCategoryVO menuIntoCategoryVO);
 }
