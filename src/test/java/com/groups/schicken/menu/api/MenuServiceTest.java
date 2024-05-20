@@ -36,10 +36,4 @@ class MenuServiceTest {
         assertNotNull(categoryVO.getMenus());
         assertNotEquals(categoryVO.getMenus().size(), 0);
     }
-
-    @Test
-    void sqlProviderTest(){
-        CategoryVO categoryVO = service.setMenuAndCategory("1", "4,5,6".split(","));
-        System.out.println(categoryVO);
-    }
 }
