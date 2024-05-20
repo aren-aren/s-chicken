@@ -24,7 +24,7 @@
                 <div class="card-body" style="padding: 50px!important; min-width: 350px;">
                     <div id="org-chart"></div>
                 </div>
-                <sec:authorize access="hasRole('ADMIN')">
+                <sec:authorize access="hasAnyRole('ADMIN', 'DEPARTMENT_WRITE')">
                 <div class="card-body align-self-end">
                     <button id="dept-add-btn" class="btn btn-primary dept-btn disabled">하위에 부서추가</button>
                     <button id="dept-mod-btn" class="btn btn-primary dept-btn disabled">부서수정</button>
